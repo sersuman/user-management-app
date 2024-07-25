@@ -1,49 +1,58 @@
 import axios from 'axios';
+import { useToast } from 'vue-toastification';
 
-const USER_API_URL = '/users.json';
-
-let usersCache = [];
-
-const loadUsers = async () => {
-  if (!usersCache.length) {
-    const response = await axios.get(USER_API_URL);
-    usersCache = response.data;
-  }
-  return usersCache;
-};
+const USER_API_URL = 'http://localhost:3000/users';
+const toast = useToast();
 
 export const getUsers = async () => {
-  return await loadUsers();
+  try {
+    const response = await axios.get(USER_API_URL);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch users', error);
+    toast.error('Failed to fetch users');
+    return [];
+  }
 };
 
 export const getUserById = async (id) => {
-  const users = await getUsers();
-  return users.find(user => user.id === parseInt(id));
-};
-
-export const createUser = async (user) => {
-  const users = await getUsers();
-  user.id = users.length + 1;
-  users.push(user);
-  // Update cache
-  usersCache = users;
-  return user;
-};
-
-export const updateUser = async (user) => {
-  const users = await getUsers();
-  const index = users.findIndex(u => u.id === user.id);
-  if (index !== -1) {
-    users[index] = user;
-    // Update cache
-    usersCache = users;
+  try {
+    const response = await axios.get(`${USER_API_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Failed to fetch user with id ${id}`, error);
+    toast.error('Failed to fetch user');
+    return null;
   }
-  return user;
+};
+
+export const updateUser = async (updatedUser) => {
+  try {
+    await axios.put(`${USER_API_URL}/${updatedUser.id}`, updatedUser);
+    toast.success('User updated successfully');
+  } catch (error) {
+    console.error('Failed to update user', error);
+    toast.error('Failed to update user');
+  }
 };
 
 export const deleteUser = async (id) => {
-  const users = await getUsers();
-  // Update cache
-  usersCache = users.filter(user => user.id !== id);
-  return usersCache;
+  try {
+    await axios.delete(`${USER_API_URL}/${id}`);
+    toast.success('User deleted successfully');
+  } catch (error) {
+    console.error('Failed to delete user', error);
+    toast.error('Failed to delete user');
+  }
+};
+
+export const addUser = async (newUser) => {
+  try {
+    const response = await axios.post(USER_API_URL, newUser);
+    toast.success('User added successfully');
+    return response.data;
+  } catch (error) {
+    console.error('Failed to add user', error);
+    toast.error('Failed to add user');
+  }
 };

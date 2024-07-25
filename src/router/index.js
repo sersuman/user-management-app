@@ -1,29 +1,35 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import Dashboard from '../views/UserDashboard.vue';
 import UserList from '../views/UserList.vue';
 import UserDetail from '../views/UserDetail.vue';
-import UserDashboard from '../views/UserDashboard.vue';
+import AddUser from '../views/AddUser.vue';
 
 const routes = [
   {
     path: '/',
+    name: 'Dashboard',
+    component: Dashboard,
+  },
+  {
+    path: '/users',
     name: 'UserList',
-    component: UserList
+    component: UserList,
   },
   {
-    path: '/user/:id',
+    path: '/users/:id',
     name: 'UserDetail',
-    component: UserDetail
+    component: UserDetail,
   },
   {
-    path: '/dashboard',
-    name: 'UserDashboard',
-    component: UserDashboard
-  }
+    path: '/add',
+    name: 'AddUser',
+    component: AddUser,
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+  history: createWebHistory(),
+  routes,
 });
 
 export default router;

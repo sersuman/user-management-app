@@ -1,5 +1,24 @@
-[
-    {"id": 1, "name": "Alice", "email": "alice@example.com"},
-    {"id": 2, "name": "Bob", "email": "bob@example.com"},
-    {"id": 3, "name": "Charlie", "email": "charlie@example.com"}
-]
+{
+  "users": [
+    {
+      "id": "7d4a",
+      "name": "Tempora illo sequi q",
+      "email": "defi@mailinator.com"
+    },
+    {
+      "id": "0306",
+      "name": "suman",
+      "email": "Suman@gmail.com"
+    },
+    {
+      "id": "e21a",
+      "name": "saroj",
+      "email": "saroj@dahal.com"
+    },
+    {
+      "id": "6a72",
+      "name": "aaa",
+      "email": "aaa@gmail.com"
+    }
+  ]
+}
